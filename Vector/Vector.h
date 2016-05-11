@@ -4,9 +4,21 @@
 template<typename T>
 class Vector
 {
-
+	int size;
 public:
-	Vector() {}
+	T* array;
+
+	/* --------------- Class constructors --------------- */
+
+	Vector();
+	Vector(int _size);
+	Vector(int _size, T value);
+	Vector(T* _array);
+
+	/* --------------- Class methods --------------- */
+
+	Vector& pushBack(T);
+	bool empty();
 
 
 };
