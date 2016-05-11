@@ -30,5 +30,8 @@ public:
 
 };
 
-
+class Range{
+public:
+	Range() {}
+};
 #endif //VECTOR_VECTOR_H
