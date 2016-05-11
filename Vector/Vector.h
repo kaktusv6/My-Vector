@@ -17,9 +17,16 @@ public:
 
 	/* --------------- Class methods --------------- */
 
+	bool empty() const;
+	T& front();
+	T& back();
+	T& at();
 	Vector& pushBack(T);
-	bool empty();
+	Vector& popBack();
 
+	/* --------------- Class operators --------------- */
+
+	T& operator[] (int);
 
 };
 
