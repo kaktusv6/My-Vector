@@ -5,6 +5,7 @@
 #ifndef VECTOR_DATA_H
 #define VECTOR_DATA_H
 
+const int DEFAULT_CAPACITY = 2;
 template<typename T>
 class Data
 {
@@ -15,7 +16,7 @@ class Data
 
 	/* --------------- Class constructors --------------- */
 
-//	Data() {}
+	Data();
 	Data(int);
 	Data(int, int);
 
@@ -28,11 +29,16 @@ class Data
 	~Data();
 
 	/* --------------- Friends class and methods -------------- */
-//	friend class Vector;
+	friend class Vector;
 };
 
 /* --------------- Define class methods --------------- */
 
+template<typename T>
+Data<T>::Data() : size(0), capacity(DEFAULT_CAPACITY)
+{
+	array = new T[DEFAULT_CAPACITY];
+}
 template<typename T>
 Data<T>::Data(int _capacity) : capacity(_capacity)
 {
