@@ -84,6 +84,11 @@ void Vector<T>::swap(Vector<T> vector)
 	data = vector.data;
 	vector.data = tmp;
 }
+template<typename T>
+int Vector<T>::size()
+{
+	data->size;
+}
 class Range{
 public:
 	Range() {}
