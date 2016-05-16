@@ -45,7 +45,7 @@ public:
 };
 
 /* --------------- Class Vectro methods and operators --------------- */
-// TODO переписать все методы, констроукторы и деструкторы
+
 template<typename T>
 Vector<T>::Vector()
 {
@@ -95,6 +95,15 @@ template<typename T>
 bool Vector<T>::empty() const
 {
 	return data->size == 0;
+}
+template<typename T>
+Vector<T> & Vector<T>::popBack()
+{
+	/*
+	 * можно просто уменьшить data->size
+	 *
+	 * можно удалить объект в конце и уменьшить data->size
+	 */
 }
 class Range{
 public:
