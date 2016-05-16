@@ -9,7 +9,7 @@ class Vector
 {
 	Data<T> * data;
 public:
-	typedef T *iterator;
+	typedef T * iterator;
 
 	/* --------------- Class constructors --------------- */
 
@@ -20,17 +20,19 @@ public:
 	/* --------------- Class methods --------------- */
 
 	void swap(Vector<T>);
-	int size();
+	int size() const;
 	bool empty() const;
-	T* begin();
-	T* end();
+
+	iterator begin();
+	iterator end();
+
 	Vector<T> & pushBack(const T);
 	Vector<T> & popBack();
 	Vector<T> & clear();
-	Vector<T> & insert(T*, T);
-	Vector<T> & erase(T*);
-	Vector<T> & erase(T*, int);
-	Vector<T> & erase(T*, T*);
+	Vector<T> & insert(iterator, T);
+	Vector<T> & erase(iterator);
+	Vector<T> & erase(iterator, int);
+	Vector<T> & erase(iterator, iterator);
 
 	/* --------------- Class operators --------------- */
 
@@ -85,9 +87,14 @@ void Vector<T>::swap(Vector<T> vector)
 	vector.data = tmp;
 }
 template<typename T>
-int Vector<T>::size()
+int Vector<T>::size() const
 {
 	data->size;
+}
+template<typename T>
+bool Vector<T>::empty() const
+{
+	return data->size == 0;
 }
 class Range{
 public:
