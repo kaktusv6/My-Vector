@@ -105,6 +105,13 @@ Vector<T> & Vector<T>::popBack()
 	 * можно удалить объект в конце и уменьшить data->size
 	 */
 }
+template<typename T>
+T & Vector<T>::operator[] (int index)
+{
+	if (index >= data->size || index < 0) throw Range();
+
+	return data->array[index];
+}
 class Range{
 public:
 	Range() {}
