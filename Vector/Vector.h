@@ -77,7 +77,13 @@ Vector<T> & Vector<T>::pushBack(const T value)
 
 	return *this;
 }
-
+template<typename T>
+void Vector<T>::swap(Vector<T> vector)
+{
+	Data<T> *tmp = data;
+	data = vector.data;
+	vector.data = tmp;
+}
 class Range{
 public:
 	Range() {}
