@@ -2,20 +2,20 @@
 #define VECTOR_VECTOR_H
 
 #include <stddef.h>
+#include "Data.h"
 
 template<typename T>
 class Vector
 {
-	int sizeArray;
+	Data<T> * data;
 public:
-	T* array;
+	typedef T *iterator;
 
 	/* --------------- Class constructors --------------- */
 
 	Vector();
 	Vector(int);
-	Vector(int, T);
-	Vector(T*);
+	Vector(int, const T);
 
 	/* --------------- Class methods --------------- */
 
@@ -24,13 +24,13 @@ public:
 	bool empty() const;
 	T* begin();
 	T* end();
-	Vector& pushBack(T);
-	Vector& popBack();
-	Vector& clear();
-	Vector& insert(T*, T);
-	Vector& erase(T*);
-	Vector& erase(T*, int);
-	Vector& erase(T*, T*);
+	Vector<T> & pushBack(const T);
+	Vector<T> & popBack();
+	Vector<T> & clear();
+	Vector<T> & insert(T*, T);
+	Vector<T> & erase(T*);
+	Vector<T> & erase(T*, int);
+	Vector<T> & erase(T*, T*);
 
 	/* --------------- Class operators --------------- */
 
@@ -38,63 +38,43 @@ public:
 
 	/* --------------- Class Destructor --------------- */
 
-	~Vector()
-	{
-		delete[] array;
-	}
+	~Vector();
 
 };
 
 /* --------------- Class Vectro methods and operators --------------- */
-
+// TODO переписать все методы, констроукторы и деструкторы
 template<typename T>
 Vector<T>::Vector()
 {
-	array = NULL;
-	sizeArray = 0;
+	data = new Data();
 }
 template<typename T>
-Vector<T>::Vector(int _size)
+Vector<T>::Vector(int size)
 {
-	array = new T[_size];
-	sizeArray = _size;
+	data = new Data(size, size*2);
 }
 
 template<typename T>
-Vector<T>::Vector(int _size, T value)
+Vector<T>::Vector(int size, const T value)
 {
-	array = new T[_size];
-	sizeArray = _size;
-	for(int i = 0; i < _size; i++)
-		array[i] = value;
-}
-
-template<typename T>
-Vector<T>::Vector(T* _array)
-{
-	array = _array;
-}
-
-template<typename T>
-Vector<T>& Vector<T>::pushBack(T value)
-{
-	if (array == NULL)
-	{
-		array = new int[1];
-		array[0] = value;
-		sizeArray++;
+	data = new Data(size, size*2);
+	for(int i = 0; i < size; i++){
+		data->array[i] = value;
 	}
-	else
-	{
-		T *_array = new T[sizeArray + 1];
-		for(int i = 0; i < sizeArray; i++)
-			_array[i] = array[i];
+}
 
-		_array[sizeArray] = value;
-		delete[] array;
-		array = _array;
-		sizeArray++;
+template<typename T>
+Vector<T> & Vector<T>::pushBack(const T value)
+{
+	if (data->size == data->capacity)
+	{
+		data->copy();
 	}
+
+	data->array[data->size] = value;
+	data->size++;
+
 	return *this;
 }
 
