@@ -9,6 +9,7 @@ class Vector
 {
 	Data<T> * data;
 public:
+	typedef T *iterator;
 
 	/* --------------- Class constructors --------------- */
 
@@ -17,19 +18,19 @@ public:
 	Vector(int, const T);
 
 	/* --------------- Class methods --------------- */
-	typedef T *iterator;
+
 	void swap(Vector<T>);
 	int size();
 	bool empty() const;
 	T* begin();
 	T* end();
-	Vector<T>& pushBack(const T);
-	Vector<T>& popBack();
-	Vector<T>& clear();
-	Vector<T>& insert(T*, T);
-	Vector<T>& erase(T*);
-	Vector<T>& erase(T*, int);
-	Vector<T>& erase(T*, T*);
+	Vector<T> & pushBack(const T);
+	Vector<T> & popBack();
+	Vector<T> & clear();
+	Vector<T> & insert(T*, T);
+	Vector<T> & erase(T*);
+	Vector<T> & erase(T*, int);
+	Vector<T> & erase(T*, T*);
 
 	/* --------------- Class operators --------------- */
 
@@ -64,25 +65,16 @@ Vector<T>::Vector(int size, const T value)
 }
 
 template<typename T>
-Vector<T>& Vector<T>::pushBack(const T value)
+Vector<T> & Vector<T>::pushBack(const T value)
 {
-	if (array == NULL)
+	if (data->size == data->capacity)
 	{
-		array = new int[1];
-		array[0] = value;
-		sizeArray++;
+		data->copy();
 	}
-	else
-	{
-		T *_array = new T[sizeArray + 1];
-		for(int i = 0; i < sizeArray; i++)
-			_array[i] = array[i];
 
-		_array[sizeArray] = value;
-		delete[] array;
-		array = _array;
-		sizeArray++;
-	}
+	data->array[data->size] = value;
+	data->size++;
+
 	return *this;
 }
 
