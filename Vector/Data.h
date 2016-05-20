@@ -52,20 +52,20 @@ template<typename T>
 Data<T>::Data(const int _capacity)
 {
 	capacity = _capacity;
-	array = new T[_capacity];
+	array = (T*)(operator new (sizeof(T) * _capacity));
 }
 template<typename T>
 Data<T>::Data(int _size, int _capacity)
 {
 	size = _size;
 	capacity = _capacity;
-	array = new T[_capacity];
+	array = (T*)(operator new (sizeof(T) * _capacity));
 }
 template<typename T>
 Data<T> & Data<T>::copy()
 {
 	capacity *= 2;
-	T * newArray = new T[capacity];
+	T * newArray = (T*)(operator new (sizeof(T) * capacity));
 	for(int i = 0; i < size; i++)
 	{
 		newArray[i]= array[i];
