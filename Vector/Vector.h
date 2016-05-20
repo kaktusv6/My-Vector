@@ -26,7 +26,7 @@ public:
 
 	Vector();
 	Vector(int);
-	Vector(int, const T);
+	Vector(int, const T&);
 
 	/* --------------- Class methods --------------- */
 
@@ -37,10 +37,10 @@ public:
 	iterator begin();
 	iterator end();
 
-	Vector<T> & pushBack(const T);
+	Vector<T> & pushBack(const T&);
 	Vector<T> & popBack();
 	Vector<T> & clear();
-	Vector<T> & insert(iterator, T);
+	Vector<T> & insert(iterator, T&);
 	Vector<T> & erase(iterator);
 	Vector<T> & erase(iterator, int);
 	Vector<T> & erase(iterator, iterator);
@@ -55,9 +55,9 @@ public:
 
 };
 
-/* --------------- Class Vector methods and operators --------------- */
-
 const int DEFAULT_CAPACITY = 0;
+
+/* --------------- Class Vector methods and operators --------------- */
 
 template<typename T>
 Vector<T>::Vector()
@@ -73,7 +73,7 @@ Vector<T>::Vector(int size)
 	array = (T*)(operator new (sizeof(T) * capacity));
 }
 template<typename T>
-Vector<T>::Vector(int size, const T value)
+Vector<T>::Vector(int size, const T& value)
 {
 	sizeArray = size;
 	capacity = sizeArray*2;
@@ -83,7 +83,7 @@ Vector<T>::Vector(int size, const T value)
 	}
 }
 template<typename T>
-Vector<T> & Vector<T>::pushBack(const T value)
+Vector<T> & Vector<T>::pushBack(const T& value)
 {
 	if (sizeArray == capacity)
 	{
