@@ -2,6 +2,7 @@
 #define VECTOR_VECTOR_H
 
 #include <stddef.h>
+#include <algorithm>
 #include "Data.h"
 
 template<typename T>
@@ -49,18 +50,18 @@ public:
 template<typename T>
 Vector<T>::Vector()
 {
-	data = new Data();
+	data = new Data<T>(DEFAULT_CAPACITY);
 }
 template<typename T>
 Vector<T>::Vector(int size)
 {
-	data = new Data(size, size*2);
+	data = new Data<T>(size, size*2);
 }
 
 template<typename T>
 Vector<T>::Vector(int size, const T value)
 {
-	data = new Data(size, size*2);
+	data = new Data<T>(size, size*2);
 	for(int i = 0; i < size; i++){
 		data->array[i] = value;
 	}
@@ -108,9 +109,14 @@ Vector<T> & Vector<T>::popBack()
 template<typename T>
 T & Vector<T>::operator[] (int index)
 {
-	if (index >= data->size || index < 0) throw Range();
+	if (index >= data->size || index < 0) throw;
 
 	return data->array[index];
+}
+template<typename T>
+Vector<T>::~Vector()
+{
+	delete data;
 }
 class Range{
 public:
