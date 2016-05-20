@@ -5,6 +5,8 @@
 #ifndef VECTOR_DATA_H
 #define VECTOR_DATA_H
 
+#include <new>
+
 const int DEFAULT_CAPACITY = 0;
 
 template<typename T>
