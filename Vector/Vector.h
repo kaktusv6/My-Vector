@@ -9,26 +9,30 @@
 template<typename T>
 class Vector
 {
-	/* --------------- Class fields private --------------- */
+	/* --------------- Private --------------- */
+
+	/* --------------- fields --------------- */
 
 	T * array;
 	int sizeArray = 0;
 	int capacity = 0;
 
-	/* --------------- Class methods private --------------- */
+	/* --------------- methods --------------- */
 
 	void copy();
 
 public:
 	typedef T * iterator;
 
-	/* --------------- Class constructors --------------- */
+	/* --------------- Public --------------- */
+
+	/* --------------- constructors --------------- */
 
 	Vector();
 	Vector(int);
 	Vector(int, const T&);
 
-	/* --------------- Class methods --------------- */
+	/* --------------- methods --------------- */
 
 	void swap(Vector<T>&);
 	int size() const;
@@ -45,11 +49,11 @@ public:
 	Vector<T> & erase(iterator, int);
 	Vector<T> & erase(iterator, iterator);
 
-	/* --------------- Class operators --------------- */
+	/* --------------- operators --------------- */
 
 	T& operator[] (int);
 
-	/* --------------- Class Destructor --------------- */
+	/* --------------- Destructor --------------- */
 
 	~Vector();
 
@@ -57,7 +61,7 @@ public:
 
 const int DEFAULT_CAPACITY = 0;
 
-/* --------------- Class Vector methods and operators --------------- */
+/* --------------- Constructors of class Vector --------------- */
 
 template<typename T>
 Vector<T>::Vector()
@@ -82,6 +86,9 @@ Vector<T>::Vector(int size, const T& value)
 		array[i] = value;
 	}
 }
+
+/* --------------- Methods of class Vector --------------- */
+
 template<typename T>
 Vector<T> & Vector<T>::pushBack(const T& value)
 {
@@ -112,12 +119,21 @@ bool Vector<T>::empty() const
 	return sizeArray == 0;
 }
 template<typename T>
+Vector<T> & Vector<T>::clear()
+{
+	delete(array);
+	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
+	sizeArray = capacity = DEFAULT_CAPACITY;
+	return *this;
+}
+template<typename T>
 Vector<T> & Vector<T>::popBack()
 {
 	/*
-	 * можно просто уменьшить data->size
+	 * можно просто уменьшить size
 	 *
-	 * можно удалить объект в конце и уменьшить data->size
+	 * можно удалить объект в конце и уменьшить
+	 * size
 	 */
 }
 template<typename T>
@@ -129,9 +145,12 @@ void Vector<T>::copy()
 		newArray[i]= array[i];
 	}
 
-	delete[] array;
+	delete(array);
 	array = newArray;
 }
+
+/* --------------- Operators of class Vector --------------- */
+
 template<typename T>
 T & Vector<T>::operator[] (int index)
 {
@@ -139,11 +158,16 @@ T & Vector<T>::operator[] (int index)
 
 	return array[index];
 }
+
+/* --------------- Destructors of class Vector --------------- */
+
 template<typename T>
 Vector<T>::~Vector()
 {
 	delete (array);
 }
+
+
 class Range{
 public:
 	Range() {}
