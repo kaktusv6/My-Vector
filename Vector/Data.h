@@ -5,11 +5,16 @@
 #ifndef VECTOR_DATA_H
 #define VECTOR_DATA_H
 
-const int DEFAULT_CAPACITY = 2;
+const int DEFAULT_CAPACITY = 0;
+
+template<typename T>
+class Vector;
+
 template<typename T>
 class Data
 {
 	/* --------------- Class fields --------------- */
+
 	T * array;
 	int size = 0;
 	int capacity = 0;
@@ -17,7 +22,7 @@ class Data
 	/* --------------- Class constructors --------------- */
 
 	Data();
-	Data(int);
+	Data(const int);
 	Data(int, int);
 
 	/* --------------- Class methods --------------- */
@@ -29,25 +34,30 @@ class Data
 	~Data();
 
 	/* --------------- Friends class and methods -------------- */
-	friend class Vector;
+
+	friend class Vector<T>;
 };
 
 /* --------------- Define class methods --------------- */
 
 template<typename T>
-Data<T>::Data() : size(0), capacity(DEFAULT_CAPACITY)
+Data<T>::Data()
 {
-	array = new T[DEFAULT_CAPACITY];
+	capacity = DEFAULT_CAPACITY;
+	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
 }
 template<typename T>
-Data<T>::Data(int _capacity) : capacity(_capacity)
+Data<T>::Data(const int _capacity)
 {
-	array = new T[capacity];
+	capacity = _capacity;
+	array = new T[_capacity];
 }
 template<typename T>
-Data<T>::Data(int _size, int _capacity) : size(_size), capacity(_capacity)
+Data<T>::Data(int _size, int _capacity)
 {
-	array = new T[capacity];
+	size = _size;
+	capacity = _capacity;
+	array = new T[_capacity];
 }
 template<typename T>
 Data<T> & Data<T>::copy()
@@ -67,6 +77,6 @@ Data<T> & Data<T>::copy()
 template<typename T>
 Data<T>::~Data()
 {
-	delete[] array;
+	delete (array);
 }
 #endif //VECTOR_DATA_H
