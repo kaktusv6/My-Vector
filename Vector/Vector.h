@@ -129,12 +129,8 @@ Vector<T> & Vector<T>::clear()
 template<typename T>
 Vector<T> & Vector<T>::popBack()
 {
-	/*
-	 * можно просто уменьшить size
-	 *
-	 * можно удалить объект в конце и уменьшить
-	 * size
-	 */
+	delete array[sizeArray--];
+	return *this;
 }
 template<typename T>
 void Vector<T>::copy()
@@ -166,7 +162,6 @@ Vector<T>::~Vector()
 {
 	delete (array);
 }
-
 
 class Range{
 public:
