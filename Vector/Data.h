@@ -7,8 +7,6 @@
 
 #include <new>
 
-const int DEFAULT_CAPACITY = 0;
-
 template<typename T>
 class Vector;
 
@@ -45,8 +43,8 @@ class Data
 template<typename T>
 Data<T>::Data()
 {
-	capacity = DEFAULT_CAPACITY;
-	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
+	capacity = 0;
+	array = (T*)(operator new (sizeof(T) * 0));
 }
 template<typename T>
 Data<T>::Data(const int _capacity)
