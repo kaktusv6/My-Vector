@@ -15,7 +15,6 @@ protected:
 	{
 		v_int = new Vector<int>();
 		v_char = new Vector<char>();
-
 	}
 
 	void TearDown()
@@ -25,6 +24,24 @@ protected:
 	}
 };
 
+TEST_F(VectorTest, TestSize)
+{
+	ASSERT_EQ(0, v_int->size());
+	ASSERT_EQ(0, v_char->size());
+	v_int->pushBack(1)
+		.pushBack(2)
+		.pushBack(2)
+		.pushBack(2)
+		.pushBack(2)
+		.pushBack(2);
+	ASSERT_EQ(6, v_int->size());
+	v_char->pushBack('c')
+		.pushBack('f')
+		.pushBack('f')
+		.pushBack('f')
+		.pushBack('f');
+	ASSERT_EQ(5, v_char->size());
+}
 TEST_F(VectorTest, TestPushBack)
 {
 	int a[8] = {
@@ -35,7 +52,6 @@ TEST_F(VectorTest, TestPushBack)
 		.pushBack(24)
 		.pushBack(2423);
 
-	ASSERT_EQ(4, v_int->size());
 	for(int i = 0; i < v_int->size(); i++){
 		ASSERT_EQ(a[i], (*v_int)[i]);
 	}
@@ -44,9 +60,20 @@ TEST_F(VectorTest, TestPushBack)
 		.pushBack(0)
 		.pushBack(0);
 
-	ASSERT_EQ(8, v_int->size());
 	for(int i = 0; i < v_int->size(); i++){
 		ASSERT_EQ(a[i], (*v_int)[i]);
+	}
+
+	char c[] = "abcdddf";
+	v_char->pushBack('a')
+		.pushBack('b')
+		.pushBack('c')
+		.pushBack('d')
+		.pushBack('d')
+		.pushBack('d')
+		.pushBack('f');
+	for(int i = 0; i < v_char->size(); i++){
+		ASSERT_EQ(c[i], (*v_char)[i]);
 	}
 }
 int main(int argc, char** argv)
