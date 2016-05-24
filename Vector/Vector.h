@@ -11,13 +11,13 @@ class Vector
 {
 	/* --------------- Private --------------- */
 
-	/* --------------- fields --------------- */
+	/* --------------- Fields --------------- */
 
 	T * array;
 	int sizeArray = 0;
 	int capacity = 0;
 
-	/* --------------- methods --------------- */
+	/* --------------- Methods --------------- */
 
 	void copy();
 
@@ -26,13 +26,13 @@ public:
 
 	/* --------------- Public --------------- */
 
-	/* --------------- constructors --------------- */
+	/* --------------- Constructors --------------- */
 
 	Vector();
 	Vector(int);
 	Vector(int, const T&);
 
-	/* --------------- methods --------------- */
+	/* --------------- Methods --------------- */
 
 	void swap(Vector<T>&);
 	int size() const;
@@ -49,7 +49,7 @@ public:
 	Vector<T> & erase(iterator, int);
 	Vector<T> & erase(iterator, iterator);
 
-	/* --------------- operators --------------- */
+	/* --------------- Operators --------------- */
 
 	T& operator[] (int);
 
