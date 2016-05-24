@@ -67,6 +67,7 @@ template<typename T>
 Vector<T>::Vector()
 {
 	capacity = DEFAULT_CAPACITY;
+	sizeArray = 0;
 	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
 }
 template<typename T>
@@ -135,7 +136,7 @@ Vector<T> & Vector<T>::popBack()
 template<typename T>
 void Vector<T>::copy()
 {
-	capacity *= 2;
+	capacity == 0 ? capacity = 2 : capacity *= 2;
 	T * newArray = (T*)(operator new (sizeof(T) * capacity));
 	for(int i = 0; i < sizeArray; i++) {
 		newArray[i]= array[i];
@@ -148,7 +149,7 @@ void Vector<T>::copy()
 /* --------------- Operators of class Vector --------------- */
 
 template<typename T>
-T & Vector<T>::operator[] (int index)
+T& Vector<T>::operator[] (int index)
 {
 	if (index >= sizeArray || index < 0) throw;
 
