@@ -9,18 +9,18 @@ class VectorTest : public ::testing::Test
 protected:
 
 	Vector<int> *v_int = NULL;
-	Vector<char> *v_char = NULL;
+//	Vector<char> *v_char = NULL;
 
 	void SetUp()
 	{
 		v_int = new Vector<int>();
-		v_char = new Vector<char>();
+//		v_char = new Vector<char>();
 	}
 
 	void TearDown()
 	{
 		delete v_int;
-		delete v_char;
+//		delete v_char;
 	}
 };
 
@@ -35,12 +35,12 @@ TEST_F(VectorTest, TestSize)
 		.pushBack(2)
 		.pushBack(2);
 	ASSERT_EQ(6, v_int->size());
-	v_char->pushBack('c')
-		.pushBack('f')
-		.pushBack('f')
-		.pushBack('f')
-		.pushBack('f');
-	ASSERT_EQ(5, v_char->size());
+//	v_char->pushBack('c')
+//		.pushBack('f')
+//		.pushBack('f')
+//		.pushBack('f')
+//		.pushBack('f');
+//	ASSERT_EQ(5, v_char->size());
 }
 TEST_F(VectorTest, TestPushBack)
 {
@@ -64,17 +64,17 @@ TEST_F(VectorTest, TestPushBack)
 		ASSERT_EQ(a[i], (*v_int)[i]);
 	}
 
-	char c[] = "abcdddf";
-	v_char->pushBack('a')
-		.pushBack('b')
-		.pushBack('c')
-		.pushBack('d')
-		.pushBack('d')
-		.pushBack('d')
-		.pushBack('f');
-	for(int i = 0; i < v_char->size(); i++){
-		ASSERT_EQ(c[i], (*v_char)[i]);
-	}
+//	char c[] = "abcdddf";
+//	v_char->pushBack('a')
+//		.pushBack('b')
+//		.pushBack('c')
+//		.pushBack('d')
+//		.pushBack('d')
+//		.pushBack('d')
+//		.pushBack('f');
+//	for(int i = 0; i < v_char->size(); i++){
+//		ASSERT_EQ(c[i], (*v_char)[i]);
+//	}
 }
 int main(int argc, char** argv)
 {
