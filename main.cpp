@@ -52,7 +52,8 @@ TEST_F(VectorTest, TestPushBack)
 		.pushBack(24)
 		.pushBack(2423);
 
-	for(int i = 0; i < v_int->size(); i++){
+	for(int i = 0; i < v_int->size(); i++)
+	{
 		ASSERT_EQ(a[i], (*v_int)[i]);
 	}
 	v_int->pushBack(9345)
@@ -60,7 +61,8 @@ TEST_F(VectorTest, TestPushBack)
 		.pushBack(0)
 		.pushBack(0);
 
-	for(int i = 0; i < v_int->size(); i++){
+	for(int i = 0; i < v_int->size(); i++)
+	{
 		ASSERT_EQ(a[i], (*v_int)[i]);
 	}
 
@@ -75,6 +77,24 @@ TEST_F(VectorTest, TestPushBack)
 //	for(int i = 0; i < v_char->size(); i++){
 //		ASSERT_EQ(c[i], (*v_char)[i]);
 //	}
+}
+TEST_F(VectorTest, TestIterator)
+{
+	int a[] = {
+		2, 3, 4, 234
+	};
+
+	v_int->pushBack(2)
+		.pushBack(3)
+		.pushBack(4)
+		.pushBack(234);
+
+	int j = 0;
+	for(auto i = v_int->begin(); i != v_int->end(); j++, i++)
+	{
+		ASSERT_EQ(a[j], *i);
+	}
+
 }
 int main(int argc, char** argv)
 {
