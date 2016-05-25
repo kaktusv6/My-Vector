@@ -22,7 +22,7 @@ class Vector
 	void copy();
 
 public:
-	typedef T * iterator;
+	typedef T* iterator;
 
 	/* --------------- Public --------------- */
 
@@ -38,8 +38,14 @@ public:
 	int size() const;
 	bool empty() const;
 
-	iterator begin();
-	iterator end();
+	iterator begin()
+	{
+		return &array[0];
+	}
+	iterator end()
+	{
+		return &array[sizeArray];
+	}
 
 	Vector<T> & pushBack(const T&);
 	Vector<T> & popBack();
@@ -145,16 +151,7 @@ void Vector<T>::copy()
 	delete(array);
 	array = newArray;
 }
-template<typename T>
-Vector<T>::iterator Vector<T>::begin()
-{
-	return &array[0];
-}
-template<typename T>
-Vector<T>::iterator Vector<T>::end()
-{
-	return &array[sizeArray];
-}
+
 /* --------------- Operators of class Vector --------------- */
 
 template<typename T>
