@@ -35,7 +35,7 @@ public:
 	/* --------------- Methods --------------- */
 
 	void swap(Vector<T>&);
-	int size() const;
+	unsigned int size() const;
 	bool empty() const;
 
 	iterator begin()
@@ -65,16 +65,15 @@ public:
 
 };
 
-const int DEFAULT_CAPACITY = 0;
-
 /* --------------- Constructors of class Vector --------------- */
 
 template<typename T>
 Vector<T>::Vector()
 {
-	capacity = DEFAULT_CAPACITY;
+	capacity = 0;
 	sizeArray = 0;
-	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
+	array = (T*)(operator new (sizeof(T) * capacity));
+	// array = new T[capacity];
 }
 template<typename T>
 Vector<T>::Vector(int size)
@@ -82,6 +81,7 @@ Vector<T>::Vector(int size)
 	sizeArray = size;
 	capacity = sizeArray*2;
 	array = (T*)(operator new (sizeof(T) * capacity));
+	// array = new T[capacity];
 }
 template<typename T>
 Vector<T>::Vector(int size, const T& value)
@@ -116,7 +116,7 @@ void Vector<T>::swap(Vector<T>& vector)
 	std::swap(capacity, vector.capacity);
 }
 template<typename T>
-int Vector<T>::size() const
+unsigned int Vector<T>::size() const
 {
 	return (unsigned int) sizeArray;
 }
@@ -129,23 +129,24 @@ template<typename T>
 Vector<T> & Vector<T>::clear()
 {
 	delete(array);
-	array = (T*)(operator new (sizeof(T) * DEFAULT_CAPACITY));
-	sizeArray = capacity = DEFAULT_CAPACITY;
+	array = (T*)(operator new (sizeof(T) * 0));
+	sizeArray = capacity = 0;
 	return *this;
 }
 template<typename T>
 Vector<T> & Vector<T>::popBack()
 {
-	delete array[sizeArray--];
+	sizeArray--;
 	return *this;
 }
 template<typename T>
 void Vector<T>::copy()
 {
 	capacity == 0 ? capacity = 2 : capacity *= 2;
-	T * newArray = (T*)(operator new (sizeof(T) * capacity));
+	T *newArray = (T*)(operator new (sizeof(T) * capacity));
+//	T *newArray = new T[capacity];
 	for(int i = 0; i < sizeArray; i++) {
-		newArray[i]= array[i];
+		newArray[i] = array[i];
 	}
 
 	delete(array);
