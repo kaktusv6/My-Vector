@@ -145,7 +145,16 @@ void Vector<T>::copy()
 	delete(array);
 	array = newArray;
 }
-
+template<typename T>
+Vector<T>::iterator Vector<T>::begin()
+{
+	return &array[0];
+}
+template<typename T>
+Vector<T>::iterator Vector<T>::end()
+{
+	return &array[sizeArray];
+}
 /* --------------- Operators of class Vector --------------- */
 
 template<typename T>
