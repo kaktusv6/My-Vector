@@ -91,10 +91,11 @@ TEST_F(VectorTest, TestIterator)
 
 	int j = 0;
 	for(auto i = v_int->begin(); i != v_int->end(); j++, i++)
-	{
 		ASSERT_EQ(a[j], *i);
-	}
-
+}
+TEST_F(VectorTest, TestInsert)
+{
+	
 }
 int main(int argc, char** argv)
 {
