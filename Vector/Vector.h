@@ -4,7 +4,6 @@
 #include <stddef.h>
 #include <algorithm>
 #include <new>
-#include "Data.h"
 
 template<typename T>
 class Vector
@@ -145,12 +144,27 @@ void Vector<T>::copy()
 	capacity == 0 ? capacity = 2 : capacity *= 2;
 	T *newArray = (T*)(operator new (sizeof(T) * capacity));
 //	T *newArray = new T[capacity];
-	for(int i = 0; i < sizeArray; i++) {
+	for(int i = 0; i < sizeArray; i++)
 		newArray[i] = array[i];
-	}
 
 	delete(array);
 	array = newArray;
+}
+
+/* --------------- Methods with iterators --------------- */
+
+template<typename T>
+Vector<T> & Vector<T>::insert(Vector<T>::iterator iterator, T& value)
+{
+	if (iterator < begin() || end() > iterator) throw;
+	if (capacity == sizeArray)
+		copy();
+
+	for(auto i = end(); i != iterator; i--)
+		*i = *(i-1);
+
+	*iterator = value;
+	return *this;
 }
 
 /* --------------- Operators of class Vector --------------- */
@@ -170,6 +184,8 @@ Vector<T>::~Vector()
 {
 	delete (array);
 }
+
+/* --------------- Class Range --------------- */
 
 class Range{
 public:
