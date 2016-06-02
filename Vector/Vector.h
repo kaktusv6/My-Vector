@@ -172,9 +172,16 @@ Vector<T> & Vector<T>::insert(Vector<T>::iterator iterator, T& value)
 template<typename T>
 T& Vector<T>::operator[] (int index)
 {
-	if (index >= sizeArray || index < 0) throw;
+	try{
+		if (index >= sizeArray || index < 0) throw;
 
-	return array[index];
+		return array[index];
+	}
+	catch (...) {
+		std::cerr << "Erorr" << std::endl;
+		return *array;
+	}
+
 }
 
 /* --------------- Destructors of class Vector --------------- */
