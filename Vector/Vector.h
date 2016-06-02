@@ -39,11 +39,11 @@ public:
 
 	iterator begin()
 	{
-		return &array[0];
+		return array;
 	}
 	iterator end()
 	{
-		return &array[sizeArray];
+		return array + sizeArray;
 	}
 
 	Vector<T> & pushBack(const T&);
@@ -98,10 +98,7 @@ Vector<T>::Vector(int size, const T& value)
 template<typename T>
 Vector<T> & Vector<T>::pushBack(const T& value)
 {
-	if (sizeArray == capacity)
-	{
-		copy();
-	}
+	copy();
 
 	array[sizeArray++] = value;
 
@@ -128,7 +125,7 @@ template<typename T>
 Vector<T> & Vector<T>::clear()
 {
 	delete(array);
-	array = (T*)(operator new (sizeof(T) * 0));
+	array = (T*)(operator new (0));
 	sizeArray = capacity = 0;
 	return *this;
 }
@@ -141,6 +138,9 @@ Vector<T> & Vector<T>::popBack()
 template<typename T>
 void Vector<T>::copy()
 {
+	if (sizeArray < capacity)
+		return;
+
 	capacity == 0 ? capacity = 2 : capacity *= 2;
 	T *newArray = (T*)(operator new (sizeof(T) * capacity));
 //	T *newArray = new T[capacity];
@@ -157,8 +157,8 @@ template<typename T>
 Vector<T> & Vector<T>::insert(Vector<T>::iterator iterator, T& value)
 {
 	if (iterator < begin() || end() > iterator) throw;
-	if (capacity == sizeArray)
-		copy();
+
+	copy();
 
 	for(auto i = end(); i != iterator; i--)
 		*i = *(i-1);
