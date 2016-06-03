@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <new>
 
+class Range;
+
 template<typename T>
 class Vector
 {
@@ -71,7 +73,7 @@ Vector<T>::Vector()
 {
 	capacity = 0;
 	sizeArray = 0;
-	array = (T*)(operator new (sizeof(T) * capacity));
+	array = (T*)(operator new (0));
 	// array = new T[capacity];
 }
 template<typename T>
@@ -80,7 +82,10 @@ Vector<T>::Vector(int size)
 	sizeArray = size;
 	capacity = sizeArray*2;
 	array = (T*)(operator new (sizeof(T) * capacity));
-	// array = new T[capacity];
+
+	for(T* i = array; i < array + size; i++){
+		new (i)T();
+	}
 }
 template<typename T>
 Vector<T>::Vector(int size, const T& value)
@@ -88,8 +93,8 @@ Vector<T>::Vector(int size, const T& value)
 	sizeArray = size;
 	capacity = sizeArray*2;
 	array = (T*)(operator new (sizeof(T) * capacity));
-	for(int i = 0; i < size; i++){
-		array[i] = value;
+	for(int i = 0; i < sizeArray; i++){
+		new (array + i)T(value);
 	}
 }
 
@@ -98,7 +103,8 @@ Vector<T>::Vector(int size, const T& value)
 template<typename T>
 Vector<T> & Vector<T>::pushBack(const T& value)
 {
-	copy();
+	if (sizeArray == capacity)
+		copy();
 
 	array[sizeArray++] = value;
 
@@ -124,7 +130,11 @@ bool Vector<T>::empty() const
 template<typename T>
 Vector<T> & Vector<T>::clear()
 {
+	for(int i = 0; i < sizeArray; i++)
+		(array+i)->~T();
+
 	delete(array);
+
 	array = (T*)(operator new (0));
 	sizeArray = capacity = 0;
 	return *this;
@@ -132,22 +142,21 @@ Vector<T> & Vector<T>::clear()
 template<typename T>
 Vector<T> & Vector<T>::popBack()
 {
-	sizeArray--;
+	(array + sizeArray--)->~T();
 	return *this;
 }
 template<typename T>
 void Vector<T>::copy()
 {
-	if (sizeArray < capacity)
-		return;
-
 	capacity == 0 ? capacity = 2 : capacity *= 2;
 	T *newArray = (T*)(operator new (sizeof(T) * capacity));
-//	T *newArray = new T[capacity];
-	for(int i = 0; i < sizeArray; i++)
-		newArray[i] = array[i];
 
-	delete(array);
+	for(int i = 0; i < sizeArray; i++)
+		new(newArray + i)T(array[i]);
+
+	for(int i = 0; i < sizeArray; i++){
+		array[i].~T();
+	}
 	array = newArray;
 }
 
@@ -156,11 +165,14 @@ void Vector<T>::copy()
 template<typename T>
 Vector<T> & Vector<T>::insert(Vector<T>::iterator iterator, T& value)
 {
-	if (iterator < begin() || end() > iterator) throw;
+	if (iterator < begin() || end() <= iterator) throw;
 
-	copy();
+	if (sizeArray == capacity)
+		copy();
 
-	for(auto i = end(); i != iterator; i--)
+	new (end())T();
+
+	for(Vector<T>::iterator i = end(); i != iterator; i--)
 		*i = *(i-1);
 
 	*iterator = value;
@@ -173,11 +185,11 @@ template<typename T>
 T& Vector<T>::operator[] (int index)
 {
 	try{
-		if (index >= sizeArray || index < 0) throw;
+		if (index >= sizeArray || index < 0) throw Range();
 
 		return array[index];
 	}
-	catch (...) {
+	catch (Range r) {
 		std::cerr << "Erorr" << std::endl;
 		return *array;
 	}
