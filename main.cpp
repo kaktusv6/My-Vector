@@ -54,7 +54,7 @@ TEST_F(VectorTest, TestPushBack)
 		ASSERT_EQ(a[i], (*v)[i]);
 
 }
-TEST_F(VectorTest, TestIterator)
+TEST_F(VectorTest, TestIterators)
 {
 	int a[] = {
 		2, 3, 4, 234
@@ -79,6 +79,44 @@ TEST_F(VectorTest, TestIterator)
 		.pushBack(3)
 		.pushBack(4)
 		.pushBack(5);
+	j = 0;
+	for(Vector<int>::iterator i = v->begin(); i != v->end(); i++, j++){
+		ASSERT_EQ(b[j], *i);
+	}
+}
+TEST_F(VectorTest, TestInsert)
+{
+	int a[] = {
+		4, 5, 6, 1, 2, 3
+	};
+	v->pushBack(1)
+		.pushBack(2)
+		.pushBack(3);
+
+	v->insert(v->begin(), 4);
+	v->insert(v->begin() + 1, 5);
+	v->insert(v->begin() + 2, 6);
+
+	int j = 0;
+	for(Vector<int>::iterator i = v->begin(); i != v->end(); i++, j++){
+		ASSERT_EQ(a[j], *i);
+	}
+
+	v->clear();
+
+	int b[] = {
+		1, 4, 5, 6, 2, 7, 3
+	};
+
+	v->pushBack(1)
+		.pushBack(2)
+		.pushBack(3);
+
+	v->insert(v->begin() + 1, 4);
+	v->insert(v->begin() + 2, 5);
+	v->insert(v->begin() + 3, 6);
+	v->insert(v->begin() + 5, 7);
+
 	j = 0;
 	for(Vector<int>::iterator i = v->begin(); i != v->end(); i++, j++){
 		ASSERT_EQ(b[j], *i);
