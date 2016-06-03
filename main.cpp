@@ -68,10 +68,10 @@ TEST_F(VectorTest, TestIterator)
 	int j = 0;
 	for(auto i = v->begin(); i != v->end(); j++, i++)
 		ASSERT_EQ(a[j], *i);
-}
-TEST_F(VectorTest, TestInsert)
-{
-	int a[5] = {
+
+	v->clear();
+
+	int b[] = {
 		1, 2, 3, 4, 5
 	};
 	v->pushBack(1)
@@ -79,9 +79,9 @@ TEST_F(VectorTest, TestInsert)
 		.pushBack(3)
 		.pushBack(4)
 		.pushBack(5);
-	int j = 0;
+	j = 0;
 	for(Vector<int>::iterator i = v->begin(); i != v->end(); i++, j++){
-		ASSERT_EQ(a[j], *i);
+		ASSERT_EQ(b[j], *i);
 	}
 }
 int main(int argc, char** argv)
