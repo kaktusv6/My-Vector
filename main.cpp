@@ -8,75 +8,51 @@ class VectorTest : public ::testing::Test
 {
 protected:
 
-	Vector<int> *v_int = NULL;
-//	Vector<char> *v_char = NULL;
+	Vector<int> *v = NULL;
 
 	void SetUp()
 	{
-		v_int = new Vector<int>();
-//		v_char = new Vector<char>();
+		v = new Vector<int>();
 	}
 
 	void TearDown()
 	{
-		delete v_int;
-//		delete v_char;
+		delete v;
 	}
 };
 
 TEST_F(VectorTest, TestSize)
 {
-	ASSERT_EQ(0, v_int->size());
-//	ASSERT_EQ(0, v_char->size());
-	v_int->pushBack(1)
+	ASSERT_EQ(0, v->size());
+	v->pushBack(1)
 		.pushBack(2)
 		.pushBack(2)
 		.pushBack(2)
 		.pushBack(2)
 		.pushBack(2);
-	ASSERT_EQ(6, v_int->size());
-//	v_char->pushBack('c')
-//		.pushBack('f')
-//		.pushBack('f')
-//		.pushBack('f')
-//		.pushBack('f');
-//	ASSERT_EQ(5, v_char->size());
+	ASSERT_EQ(6, v->size());
 }
 TEST_F(VectorTest, TestPushBack)
 {
 	int a[8] = {
 		2, 3, 24, 2423, 9345, 526, 0, 0
 	};
-	v_int->pushBack(2)
+	v->pushBack(2)
 		.pushBack(3)
 		.pushBack(24)
 		.pushBack(2423);
 
-	for(int i = 0; i < v_int->size(); i++)
-	{
-		ASSERT_EQ(a[i], (*v_int)[i]);
-	}
-	v_int->pushBack(9345)
+	for(int i = 0; i < v->size(); i++)
+		ASSERT_EQ(a[i], (*v)[i]);
+
+	v->pushBack(9345)
 		.pushBack(526)
 		.pushBack(0)
 		.pushBack(0);
 
-	for(int i = 0; i < v_int->size(); i++)
-	{
-		ASSERT_EQ(a[i], (*v_int)[i]);
-	}
+	for(int i = 0; i < v->size(); i++)
+		ASSERT_EQ(a[i], (*v)[i]);
 
-//	char c[] = "abcdddf";
-//	v_char->pushBack('a')
-//		.pushBack('b')
-//		.pushBack('c')
-//		.pushBack('d')
-//		.pushBack('d')
-//		.pushBack('d')
-//		.pushBack('f');
-//	for(int i = 0; i < v_char->size(); i++){
-//		ASSERT_EQ(c[i], (*v_char)[i]);
-//	}
 }
 TEST_F(VectorTest, TestIterator)
 {
@@ -84,18 +60,29 @@ TEST_F(VectorTest, TestIterator)
 		2, 3, 4, 234
 	};
 
-	v_int->pushBack(2)
+	v->pushBack(2)
 		.pushBack(3)
 		.pushBack(4)
 		.pushBack(234);
 
 	int j = 0;
-	for(auto i = v_int->begin(); i != v_int->end(); j++, i++)
+	for(auto i = v->begin(); i != v->end(); j++, i++)
 		ASSERT_EQ(a[j], *i);
 }
 TEST_F(VectorTest, TestInsert)
 {
-	
+	int a[5] = {
+		1, 2, 3, 4, 5
+	};
+	v->pushBack(1)
+		.pushBack(2)
+		.pushBack(3)
+		.pushBack(4)
+		.pushBack(5);
+	int j = 0;
+	for(Vector<int>::iterator i = v->begin(); i != v->end(); i++, j++){
+		ASSERT_EQ(a[j], *i);
+	}
 }
 int main(int argc, char** argv)
 {
