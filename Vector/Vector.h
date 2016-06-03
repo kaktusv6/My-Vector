@@ -36,22 +36,18 @@ public:
 	/* --------------- Methods --------------- */
 
 	void swap(Vector<T>&);
+	void insert(iterator, T);
+
 	unsigned int size() const;
+
 	bool empty() const;
 
-	iterator begin()
-	{
-		return array;
-	}
-	iterator end()
-	{
-		return array + sizeArray;
-	}
+	iterator begin() { return array; }
+	iterator end() { return array + sizeArray; }
 
 	Vector<T> & pushBack(const T&);
 	Vector<T> & popBack();
 	Vector<T> & clear();
-	Vector<T> & insert(iterator, T&);
 	Vector<T> & erase(iterator);
 	Vector<T> & erase(iterator, int);
 	Vector<T> & erase(iterator, iterator);
@@ -163,20 +159,35 @@ void Vector<T>::copy()
 /* --------------- Methods with iterators --------------- */
 
 template<typename T>
-Vector<T> & Vector<T>::insert(Vector<T>::iterator iterator, T& value)
+void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 {
-	if (iterator < begin() || end() <= iterator) throw;
+	try {
+		if (iterator < begin() || end() <= iterator) throw Range();
 
-	if (sizeArray == capacity)
-		copy();
+		Vector<T>::iterator iterator1 = iterator;
+		if (sizeArray == capacity)
+		{
+			int i = 0;
+			while(array + i != iterator1)
+				i++;
+			copy();
+			iterator1 = array + i;
+		}
 
-	new (end())T();
+		new (end())T();
 
-	for(Vector<T>::iterator i = end(); i != iterator; i--)
-		*i = *(i-1);
+		for(Vector<T>::iterator i = end(); i != iterator1; i--)
+			*i = *(i-1);
 
-	*iterator = value;
-	return *this;
+		*iterator1 = value;
+		sizeArray++;
+		return;
+	}
+	catch(Range r)
+	{
+		std::cerr << "Error" << std::endl;
+		return;
+	}
 }
 
 /* --------------- Operators of class Vector --------------- */
