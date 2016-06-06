@@ -36,7 +36,10 @@ public:
 	/* --------------- Methods --------------- */
 
 	void swap(Vector<T>&);
-	void insert(iterator, T);
+	void insert(const iterator, T);
+	void erase(iterator);
+	void erase(iterator, int);
+	void erase(iterator, iterator);
 
 	unsigned int size() const;
 
@@ -48,9 +51,6 @@ public:
 	Vector<T> & pushBack(const T&);
 	Vector<T> & popBack();
 	Vector<T> & clear();
-	Vector<T> & erase(iterator);
-	Vector<T> & erase(iterator, int);
-	Vector<T> & erase(iterator, iterator);
 
 	/* --------------- Operators --------------- */
 
@@ -138,7 +138,7 @@ Vector<T> & Vector<T>::clear()
 template<typename T>
 Vector<T> & Vector<T>::popBack()
 {
-	(array + sizeArray--)->~T();
+	(array + --sizeArray)->~T();
 	return *this;
 }
 template<typename T>
@@ -162,7 +162,8 @@ template<typename T>
 void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 {
 	try {
-		if (iterator < begin() || end() <= iterator) throw Range();
+		if (iterator < begin() || end() <= iterator)
+			throw Range();
 
 		Vector<T>::iterator iterator1 = iterator;
 		if (sizeArray == capacity)
@@ -185,6 +186,27 @@ void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 	}
 	catch(Range r)
 	{
+		std::cerr << "Error" << std::endl;
+		return;
+	}
+}
+template<typename T>
+void Vector<T>::erase(Vector<T>::iterator iterator)
+{
+	try{
+		if (iterator < begin() || end() <= iterator)
+			throw Range();
+
+		int i = 0;
+		while(array + i != iterator)
+			i++;
+
+		for(i ; i < sizeArray; i++)
+			array[i] = array[i + 1];
+
+		popBack();
+	}
+	catch(Range r){
 		std::cerr << "Error" << std::endl;
 		return;
 	}
