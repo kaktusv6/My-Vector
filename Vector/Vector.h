@@ -256,6 +256,15 @@ void Vector<T>::erase(Vector<T>::iterator iterator1,
 		std::cerr << "Error" << std::endl;
 	}
 }
+template<typename T>
+void Vector<T>::erase(Vector<T>::iterator iterator, int n)
+{
+	int i = 0;
+
+	for(Vector<T>::iterator iterator1 = iterator; iterator1 != iterator; iterator1++, i++);
+	for(i; i < n; i++);
+	erase(iterator, array + i);
+}
 
 /* --------------- Operators of class Vector --------------- */
 
