@@ -259,8 +259,13 @@ void Vector<T>::erase(Vector<T>::iterator iterator1,
 template<typename T>
 void Vector<T>::erase(Vector<T>::iterator iterator, int n)
 {
-	int i = 0;
+	if(n == 1)
+	{
+		erase(iterator);
+		return;
+	}
 
+	int i = 0;
 	for(Vector<T>::iterator iterator1 = iterator; iterator1 != iterator; iterator1++, i++);
 	for(i; i < n; i++);
 	erase(iterator, array + i);
