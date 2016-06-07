@@ -20,7 +20,7 @@ class Vector
 
 	/* --------------- Methods --------------- */
 
-	void copy();
+	void reserve();
 
 public:
 	typedef T* iterator;
@@ -92,7 +92,7 @@ template<typename T>
 Vector<T> & Vector<T>::pushBack(const T& value)
 {
 	if (sizeArray == capacityArray)
-		copy();
+		reserve();
 
 	array[sizeArray++] = value;
 
@@ -139,7 +139,7 @@ Vector<T> & Vector<T>::popBack()
 	return *this;
 }
 template<typename T>
-void Vector<T>::copy()
+void Vector<T>::reserve()
 {
 	capacityArray == 0 ? capacityArray = 2 : capacityArray *= 2;
 	T *newArray = (T*)(operator new (sizeof(T) * capacityArray));
@@ -168,7 +168,7 @@ void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 			int i = 0;
 			while(array + i != iterator1)
 				i++;
-			copy();
+			reserve();
 			iterator1 = array + i;
 		}
 
