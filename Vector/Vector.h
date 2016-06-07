@@ -79,7 +79,7 @@ template<typename T>
 Vector<T>::Vector(int size, const T& value)
 {
 	sizeArray = size;
-	capacityArray = sizeArray*2;
+	capacityArray = sizeArray;
 	array = (T*)(operator new (sizeof(T) * capacityArray));
 	for(int i = 0; i < sizeArray; i++){
 		new (array + i)T(value);
@@ -165,9 +165,7 @@ void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 		Vector<T>::iterator iterator1 = iterator;
 		if (sizeArray == capacityArray)
 		{
-			int i = 0;
-			while(array + i != iterator1)
-				i++;
+			int i = (int)(iterator1 - array);
 			reserve();
 			iterator1 = array + i;
 		}
@@ -193,11 +191,7 @@ void Vector<T>::erase(Vector<T>::iterator iterator)
 		if (iterator < begin() || end() <= iterator)
 			throw Range();
 
-		int i = 0;
-		while(array + i != iterator)
-			i++;
-
-		for(i ; i < sizeArray; i++)
+		for(int i = (int)(iterator - array) ; i < sizeArray; i++)
 			array[i] = array[i + 1];
 
 		popBack();
@@ -217,13 +211,8 @@ void Vector<T>::erase(Vector<T>::iterator iterator1,
 		if (iterator2 < begin() || end() <= iterator2)
 			throw Range();
 
-		int i = 0;
-		while(array + i != iterator1)
-			i++;
-
-		int j = i;
-		while(array + j < iterator2)
-			j++;
+		int i = (int)(iterator1 - array),
+			j = (int)(iterator2 - array);
 
 		if (i == j)
 		{
