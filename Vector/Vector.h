@@ -187,7 +187,6 @@ void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 	catch(Range r)
 	{
 		std::cerr << "Error" << std::endl;
-		return;
 	}
 }
 template<typename T>
@@ -208,7 +207,53 @@ void Vector<T>::erase(Vector<T>::iterator iterator)
 	}
 	catch(Range r){
 		std::cerr << "Error" << std::endl;
-		return;
+	}
+}
+template<typename T>
+void Vector<T>::erase(Vector<T>::iterator iterator1,
+					  Vector<T>::iterator iterator2)
+{
+	try{
+		if (iterator1 < begin() || end() <= iterator1)
+			throw Range();
+
+		if (iterator2 < begin() || end() <= iterator2)
+			throw Range();
+
+		int i = 0;
+		while(array + i != iterator1)
+			i++;
+
+		int j = i;
+		while(array + j < iterator2)
+			j++;
+
+		if (i == j)
+		{
+			erase(iterator1);
+			return;
+		}
+
+		// move elements
+		j++;
+		while(j < sizeArray)
+		{
+			*(array + i) = *(array + j);
+			i++;
+			j++;
+		}
+
+		// remove elements
+		int size = i;
+		for(i++; i < sizeArray; i++)
+		{
+			(array + i)->~T();
+		}
+
+		sizeArray = size;
+	}
+	catch(Range r){
+		std::cerr << "Error" << std::endl;
 	}
 }
 
