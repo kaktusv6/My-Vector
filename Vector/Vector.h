@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <new>
 
-class Range;
-
 template<typename T>
 class Vector
 {
@@ -70,7 +68,6 @@ Vector<T>::Vector()
 	capacityArray = 0;
 	sizeArray = 0;
 	array = (T*)(operator new (0));
-	// array = new T[capacity];
 }
 template<typename T>
 Vector<T>::Vector(int size) : Vector(size, T())
@@ -95,7 +92,6 @@ Vector<T> & Vector<T>::pushBack(const T& value)
 		reserve();
 
 	array[sizeArray++] = value;
-
 	return *this;
 }
 template<typename T>
@@ -158,89 +154,73 @@ void Vector<T>::reserve()
 template<typename T>
 void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 {
-	try {
-		if (iterator < begin() || end() <= iterator)
-			throw Range();
+	if (iterator < begin() || end() <= iterator)
+		throw;
 
-		Vector<T>::iterator iterator1 = iterator;
-		if (sizeArray == capacityArray)
-		{
-			int i = (int)(iterator1 - array);
-			reserve();
-			iterator1 = array + i;
-		}
-
-		new (end())T();
-
-		for(Vector<T>::iterator i = end(); i != iterator1; i--)
-			*i = *(i-1);
-
-		*iterator1 = value;
-		sizeArray++;
-		return;
-	}
-	catch(Range r)
+	Vector<T>::iterator iterator1 = iterator;
+	if (sizeArray == capacityArray)
 	{
-		std::cerr << "Error" << std::endl;
+		int i = (int)(iterator1 - array);
+		reserve();
+		iterator1 = array + i;
 	}
+
+	new (end())T();
+
+	for(Vector<T>::iterator i = end(); i != iterator1; i--)
+		*i = *(i-1);
+
+	*iterator1 = value;
+	sizeArray++;
+	return;
 }
 template<typename T>
 void Vector<T>::erase(Vector<T>::iterator iterator)
 {
-	try{
-		if (iterator < begin() || end() <= iterator)
-			throw Range();
+	if (iterator < begin() || end() <= iterator)
+		throw;
 
-		for(int i = (int)(iterator - array) ; i < sizeArray; i++)
-			array[i] = array[i + 1];
+	for(int i = (int)(iterator - array) ; i < sizeArray; i++)
+		array[i] = array[i + 1];
 
-		popBack();
-	}
-	catch(Range r){
-		std::cerr << "Error" << std::endl;
-	}
+	popBack();
 }
 template<typename T>
 void Vector<T>::erase(Vector<T>::iterator iterator1,
 					  Vector<T>::iterator iterator2)
 {
-	try{
-		if (iterator1 < begin() || end() <= iterator1)
-			throw Range();
+	if (iterator1 < begin() || end() <= iterator1)
+		throw;
 
-		if (iterator2 < begin() || end() <= iterator2)
-			throw Range();
+	if (iterator2 < begin() || end() <= iterator2)
+		throw;
 
-		int i = (int)(iterator1 - array),
-			j = (int)(iterator2 - array);
+	int i = (int)(iterator1 - array),
+		j = (int)(iterator2 - array);
 
-		if (i == j)
-		{
-			erase(iterator1);
-			return;
-		}
+	if (i == j)
+	{
+		erase(iterator1);
+		return;
+	}
 
-		// move elements
+	// move elements
+	j++;
+	while(j < sizeArray)
+	{
+		*(array + i) = *(array + j);
+		i++;
 		j++;
-		while(j < sizeArray)
-		{
-			*(array + i) = *(array + j);
-			i++;
-			j++;
-		}
-
-		// remove elements
-		int size = i;
-		for(i++; i < sizeArray; i++)
-		{
-			(array + i)->~T();
-		}
-
-		sizeArray = size;
 	}
-	catch(Range r){
-		std::cerr << "Error" << std::endl;
+
+	// remove elements
+	int size = i;
+	for(i++; i < sizeArray; i++)
+	{
+		(array + i)->~T();
 	}
+
+	sizeArray = size;
 }
 template<typename T>
 void Vector<T>::erase(Vector<T>::iterator iterator, int n)
@@ -262,16 +242,9 @@ void Vector<T>::erase(Vector<T>::iterator iterator, int n)
 template<typename T>
 T& Vector<T>::operator[] (int index)
 {
-	try{
-		if (index >= sizeArray || index < 0) throw Range();
+	if (index >= sizeArray || index < 0) throw;
 
-		return array[index];
-	}
-	catch (Range r) {
-		std::cerr << "Erorr" << std::endl;
-		return *array;
-	}
-
+	return array[index];
 }
 
 /* --------------- Destructors of class Vector --------------- */
@@ -282,10 +255,4 @@ Vector<T>::~Vector()
 	delete (array);
 }
 
-/* --------------- Class Range --------------- */
-
-class Range{
-public:
-	Range() {}
-};
 #endif //VECTOR_VECTOR_H
