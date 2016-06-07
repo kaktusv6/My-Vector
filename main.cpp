@@ -122,6 +122,45 @@ TEST_F(VectorTest, TestInsert)
 		ASSERT_EQ(b[j], *i);
 	}
 }
+TEST_F(VectorTest, TestEraseWithOneIterator)
+{
+	int a[3] = {
+		7, 9, 10
+	};
+
+	v->pushBack(1)
+		.pushBack(6)
+		.pushBack(7)
+		.pushBack(9)
+		.pushBack(10);
+
+	v->erase(v->begin());
+	v->erase(v->begin());
+
+	int i = 0;
+	for(Vector<int>::iterator j = v->begin(); j != v->end(); j++, i++)
+		ASSERT_EQ(a[i], *j);
+
+	v->clear();
+
+	int b[4] = {
+		1, 2, 4, 5,
+	};
+
+	v->pushBack(1)
+		.pushBack(2)
+		.pushBack(3)
+		.pushBack(4)
+		.pushBack(5)
+		.pushBack(6);
+
+	v->erase(v->begin() + 2); // 3
+	v->erase(v->end() - 1); // 6
+
+	i = 0;
+	for(Vector<int>::iterator j = v->begin(); j != v->end(); j++, i++)
+		ASSERT_EQ(b[i], *j);
+}
 int main(int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
