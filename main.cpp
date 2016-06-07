@@ -160,6 +160,12 @@ TEST_F(VectorTest, TestEraseWithOneIterator)
 	i = 0;
 	for(Vector<int>::iterator j = v->begin(); j != v->end(); j++, i++)
 		ASSERT_EQ(b[i], *j);
+
+	v->erase(v->begin() + 1, 3);
+
+	i = 0;
+	for(Vector<int>::iterator j = v->begin(); j != v->end(); j++, i++)
+		ASSERT_EQ(b[i], *j);
 }
 TEST_F(VectorTest, TestEraseWithTwoIterator)
 {
@@ -178,8 +184,6 @@ TEST_F(VectorTest, TestEraseWithTwoIterator)
 	}
 
 	v->clear();
-
-
 }
 int main(int argc, char** argv)
 {
