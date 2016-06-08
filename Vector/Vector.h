@@ -155,7 +155,7 @@ template<typename T>
 void Vector<T>::insert(const Vector<T>::iterator iterator, T value)
 {
 	if (iterator < begin() || end() <= iterator)
-		throw;
+		throw nullptr;
 
 	Vector<T>::iterator iterator1 = iterator;
 	if (sizeArray == capacityArray)
@@ -178,7 +178,7 @@ template<typename T>
 void Vector<T>::erase(Vector<T>::iterator iterator)
 {
 	if (iterator < begin() || end() <= iterator)
-		throw;
+		throw nullptr;
 
 	for(int i = (int)(iterator - array) ; i < sizeArray; i++)
 		array[i] = array[i + 1];
@@ -186,21 +186,21 @@ void Vector<T>::erase(Vector<T>::iterator iterator)
 	popBack();
 }
 template<typename T>
-void Vector<T>::erase(Vector<T>::iterator iterator1,
-					  Vector<T>::iterator iterator2)
+void Vector<T>::erase(Vector<T>::iterator iterator_begin,
+					  Vector<T>::iterator iterator_end)
 {
-	if (iterator1 < begin() || end() <= iterator1)
-		throw;
+	if (iterator_begin < begin() || end() <= iterator_begin)
+		throw nullptr;
 
-	if (iterator2 < begin() || end() <= iterator2)
-		throw;
+	if (iterator_end < begin() || end() <= iterator_end)
+		throw nullptr;
 
-	int i = (int)(iterator1 - array),
-		j = (int)(iterator2 - array);
+	int i = (int)(iterator_begin - array),
+		j = (int)(iterator_end - array);
 
 	if (i == j)
 	{
-		erase(iterator1);
+		erase(iterator_begin);
 		return;
 	}
 
@@ -242,8 +242,7 @@ void Vector<T>::erase(Vector<T>::iterator iterator, int n)
 template<typename T>
 T& Vector<T>::operator[] (int index)
 {
-	if (index >= sizeArray || index < 0) throw;
-
+	if (index >= sizeArray || index < 0) throw nullptr;
 	return array[index];
 }
 
