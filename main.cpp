@@ -184,6 +184,33 @@ TEST_F(VectorTest, TestEraseWithTwoIterator)
 	}
 
 	v->clear();
+
+	for(int i = 0; i < 10; i++){
+		v->pushBack(i + 1);
+	}
+	v->erase(v->begin(), v->end() - 1);
+	ASSERT_EQ(0, v->size());
+	ASSERT_TRUE(v->begin() == v->end());
+}
+TEST_F(VectorTest, TestExeption)
+{
+	for(int i = 0; i < 10; i++){
+		v->pushBack(i);
+	}
+
+	ASSERT_ANY_THROW((*v)[11]);
+	ASSERT_ANY_THROW((*v)[-1]);
+	ASSERT_ANY_THROW((*v)[-10]);
+
+	ASSERT_ANY_THROW(v->insert(v->begin() - 1, 12));
+	ASSERT_ANY_THROW(v->insert(v->end(), 12));
+	ASSERT_ANY_THROW(v->insert(v->end() + 1, 12));
+	ASSERT_ANY_THROW(v->insert(v->begin() - 10, 12));
+	ASSERT_ANY_THROW(v->insert(v->end() + 9, 12));
+
+	ASSERT_ANY_THROW(v->erase(v->begin() - 1, v->begin()));
+	ASSERT_ANY_THROW(v->erase(v->begin(), v->end()));
+	ASSERT_ANY_THROW(v->erase(v->begin(), v->begin() + 20));
 }
 int main(int argc, char** argv)
 {
